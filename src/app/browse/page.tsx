@@ -11,11 +11,18 @@ export default function BrowsePage() {
   const filtered = personas.filter((p) => {
     const matchesCategory =
       activeCategory === "all" || p.category === activeCategory;
+    const q = search.toLowerCase();
     const matchesSearch =
-      search === "" ||
-      p.displayName.toLowerCase().includes(search.toLowerCase()) ||
-      p.description.toLowerCase().includes(search.toLowerCase()) ||
-      p.tags.some((t) => t.toLowerCase().includes(search.toLowerCase()));
+      q === "" ||
+      p.displayName.toLowerCase().includes(q) ||
+      p.description.toLowerCase().includes(q) ||
+      p.tags.some((t) => t.includes(q)) ||
+      p.highlights.some((h) => h.toLowerCase().includes(q)) ||
+      p.workflows.some((w) => w.name.toLowerCase().includes(q) || w.description.toLowerCase().includes(q) || w.command.toLowerCase().includes(q)) ||
+      p.mcpServers.some((m) => m.name.toLowerCase().includes(q)) ||
+      p.compatibleWith.some((c) => c.toLowerCase().includes(q)) ||
+      p.blueprints.some((b) => b.displayName.toLowerCase().includes(q) || b.description.toLowerCase().includes(q) || b.services.some((s) => s.toLowerCase().includes(q))) ||
+      p.author.toLowerCase().includes(q);
     return matchesCategory && matchesSearch;
   });
 

@@ -130,6 +130,70 @@ export default async function PersonaPage({
               </div>
             )}
 
+            {/* Blueprints */}
+            {persona.blueprints.length > 0 && (
+              <div>
+                <h2 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
+                  Projects you can build
+                </h2>
+                <p className="text-sm text-[var(--text-muted)] mb-4">
+                  Complete systems this persona can set up for you. Each includes
+                  workflow configs, templates, and step-by-step instructions.
+                </p>
+                <div className="space-y-4">
+                  {persona.blueprints.map((bp) => (
+                    <div
+                      key={bp.name}
+                      className="border border-[var(--border)] rounded-lg p-4"
+                    >
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-sm font-semibold text-[var(--text-primary)]">
+                          {bp.displayName}
+                        </span>
+                        <span
+                          className={`text-xs px-2 py-0.5 rounded-full border ${
+                            bp.complexity === "complex"
+                              ? "border-orange-400/30 text-orange-400"
+                              : bp.complexity === "medium"
+                                ? "border-yellow-400/30 text-yellow-400"
+                                : "border-green-400/30 text-green-400"
+                          }`}
+                        >
+                          {bp.complexity}
+                        </span>
+                      </div>
+                      <p className="text-sm text-[var(--text-secondary)] mb-3 leading-relaxed">
+                        {bp.description}
+                      </p>
+                      <div className="space-y-1.5">
+                        {bp.outcomes.map((outcome, i) => (
+                          <div
+                            key={i}
+                            className="flex items-start gap-2 text-xs text-[var(--text-muted)]"
+                          >
+                            <span className="text-[var(--accent)] mt-0.5 shrink-0">
+                              +
+                            </span>
+                            <span>{outcome}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-[var(--border)]">
+                        {bp.services.map((svc) => (
+                          <span
+                            key={svc}
+                            className="text-xs px-2 py-0.5 rounded bg-[var(--bg-secondary)] text-[var(--text-muted)]"
+                          >
+                            {svc}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             {/* Tags */}
             <div>
               <h2 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">

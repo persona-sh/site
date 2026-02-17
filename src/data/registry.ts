@@ -8,6 +8,15 @@ export interface Workflow {
   description: string;
 }
 
+export interface Blueprint {
+  name: string;
+  displayName: string;
+  description: string;
+  complexity: "simple" | "medium" | "complex";
+  services: string[];
+  outcomes: string[];
+}
+
 export interface PersonaEntry {
   slug: string;
   displayName: string;
@@ -19,6 +28,7 @@ export interface PersonaEntry {
   mcpServers: { name: string; required: boolean }[];
   compatibleWith: string[];
   workflows: Workflow[];
+  blueprints: Blueprint[];
   highlights: string[];
   version: string;
   repository: string;
@@ -42,6 +52,45 @@ export const personas: PersonaEntry[] = [
     ],
     compatibleWith: ["Claude Code", "Cursor", "Windsurf", "Codex CLI", "Copilot"],
     workflows: [],
+    blueprints: [
+      {
+        name: "telegram-intake",
+        displayName: "Telegram Document Intake",
+        description: "Telegram bot that receives documents and photos, classifies them with AI, renames them, and files them to the correct Google Drive folder. Tracks everything in a Google Sheet.",
+        complexity: "complex",
+        services: ["n8n", "telegram", "google-drive", "google-sheets", "anthropic-api"],
+        outcomes: [
+          "Documents sent to Telegram are automatically classified and filed to Drive",
+          "AI renames files with standardized naming conventions",
+          "Every filed document is logged in a tracking spreadsheet with status, classification, and links",
+          "Handles photos, PDFs, and text messages",
+        ],
+      },
+      {
+        name: "task-management",
+        displayName: "AI Task Management",
+        description: "Telegram-triggered task management where the AI tracks, prioritizes, and executes tasks across projects. Integrates with Google Sheets for persistent tracking.",
+        complexity: "medium",
+        services: ["n8n", "telegram", "google-sheets"],
+        outcomes: [
+          "Create, update, and query tasks via Telegram messages",
+          "AI prioritizes tasks based on project goals and deadlines",
+          "Persistent task tracking in Google Sheets with status and timestamps",
+        ],
+      },
+      {
+        name: "accounting-pipeline",
+        displayName: "Accounting Pipeline",
+        description: "Custom accounting spreadsheet that categorizes expenses and revenue, linked to Google Drive folders for source documents. AI classifies transactions from uploaded receipts and invoices.",
+        complexity: "medium",
+        services: ["google-sheets", "google-drive", "anthropic-api"],
+        outcomes: [
+          "Expenses and revenue automatically categorized from uploaded documents",
+          "Custom spreadsheet with formulas for running totals and category breakdowns",
+          "Source documents linked to their corresponding spreadsheet entries",
+        ],
+      },
+    ],
     highlights: [
       "Partnership, not service — pushes back on bad ideas, disagrees when it sees a problem, offers unsolicited opinions. Silent agreement is treated as failure.",
       "Anti-sycophancy engine — no \"Great question!\", no hedging. If your idea has holes, says \"That won't work because X\" directly.",
@@ -98,6 +147,7 @@ export const personas: PersonaEntry[] = [
         description: "Auto-builds a personal CRM by scanning your communications. Tracks interaction history, flags stale relationships by tier, suggests outreach with context.",
       },
     ],
+    blueprints: [],
     highlights: [
       "Morning briefing replaces 90 minutes of inbox processing with 5 minutes",
       "3-tier triage system prioritizes by who matters, not who's loudest",
