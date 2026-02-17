@@ -6,9 +6,14 @@ export default function DocsPage() {
         <p className="text-[var(--text-secondary)] mb-4">
           Everything you need to create, package, and publish a persona.
         </p>
-        <p className="text-sm text-[var(--text-muted)] mb-10">
+        <p className="text-sm text-[var(--text-muted)] mb-4">
           AI agents: this page contains the complete spec. Read it once and you
           can generate a persona repo from any user&apos;s setup.
+        </p>
+        <p className="text-sm text-[var(--text-muted)] mb-10">
+          Persona packages are plain markdown files in a Git repo. They are not
+          tied to any specific AI agent. Any agent that can read text files can
+          use them. The spec is agent-agnostic by design.
         </p>
 
         {/* TOC */}
@@ -215,13 +220,20 @@ git clone https://github.com/you/my-persona.git
 ### 2. Edit PERSONA.md
 Replace all {{VARIABLE}} placeholders with your info.
 
-### 3. Copy to your AI agent's config
+### 3. Load the persona into your AI agent
+Copy PERSONA.md content into your agent's config.
+Every agent has a location for persistent instructions:
+
+Known config paths (examples, not exhaustive):
 - Claude Code: ~/.claude/CLAUDE.md
 - Cursor: .cursorrules in project root
 - Windsurf: .windsurfrules in project root
-- OpenClaw: personality file in config directory
-- ZeroClaw: agent config in workspace
-- Or any agent that reads markdown config files
+- OpenClaw/ZeroClaw: personality config dir
+
+For any other agent: find where it reads system
+instructions or persistent context, and paste
+PERSONA.md there. The format is plain markdown --
+it works anywhere.
 
 ### 4. Connect integrations (if applicable)
 [List each MCP server or API with setup steps]
@@ -310,14 +322,11 @@ author:
 category: executive         # see categories below
 tags: [tag1, tag2, tag3]    # 2-8 tags
 
-compatible_with:            # which AI agents
-  - Claude Code
-  - Cursor
-  - Windsurf
-  - OpenClaw
-  - ZeroClaw
-  - Codex CLI
-  - Copilot
+compatible_with:            # agents you've tested with
+  - Claude Code             # list what you've verified
+  - Cursor                  # not an exhaustive limit
+  - OpenClaw                # any agent that reads
+  - ZeroClaw                # markdown config files works
 
 requires_mcp:               # optional
   - name: gmail
@@ -353,6 +362,9 @@ repository: https://github.com/you/my-persona`}
             <p><strong className="text-[var(--text-primary)]">Required fields:</strong> name, display_name, version, description, author (name + github), category, tags</p>
             <p><strong className="text-[var(--text-primary)]">Recommended:</strong> compatible_with, highlights, repository, variables</p>
             <p><strong className="text-[var(--text-primary)]">Optional:</strong> requires_mcp, workflows, blueprints</p>
+            <p className="text-[var(--text-muted)] mt-2 text-xs">
+              <strong>Note on compatible_with:</strong> Persona packages are plain markdown files. They work with ANY AI agent that reads config files. The compatible_with field lists agents the author has tested with, not agents it&apos;s limited to. If an agent isn&apos;t listed, the persona still works -- the author just hasn&apos;t verified it.
+            </p>
           </div>
         </section>
 
