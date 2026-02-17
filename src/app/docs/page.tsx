@@ -441,7 +441,16 @@ setup_time_minutes: 30
 variables:
   - key: TELEGRAM_BOT_TOKEN
     prompt: "Paste your Telegram bot token"
-    required: true`}
+    description: "Create via @BotFather. Looks like 123456:ABC-DEF..."
+    required: true
+  - key: DRIVE_ROOT_FOLDER_ID
+    prompt: "Google Drive folder ID for filing"
+    description: "AI creates subfolders inside this. Copy ID from Drive URL."
+    create: false
+  - key: TRACKING_SHEET_ID
+    prompt: "Google Sheet ID for the tracking log"
+    description: "Leave blank -- AI creates this during setup."
+    create: true`}
             </pre>
           </div>
 
@@ -452,6 +461,9 @@ variables:
               "Strip ALL credentials from workflow files. Use {{VARIABLE}} placeholders",
               "Include expected outputs after key steps so users know it's working",
               "Templates should contain example data, not be empty shells",
+              "Every variable needs a description: what valid values look like, where to find them, and whether the AI creates the resource or the user provides one",
+              "If the blueprint needs a folder structure, spreadsheet schema, or database schema, document it in templates/ as a separate file. The installing AI needs to know 'create these 4 folders' or 'create a sheet with these columns' -- not just 'put an ID here'",
+              "Workflow files should be functional templates. Someone's AI should read setup.md, create the infrastructure, substitute variables, and have a working system without reverse-engineering intent",
               "Be honest about complexity and setup time",
             ].map((rule, i) => (
               <div key={i} className="flex items-start gap-2.5">
@@ -1025,7 +1037,13 @@ requires:
 outcomes:
   - "All deals tracked in one sheet with status and probability"
   - "Automated reminders when deals go cold"
-setup_time_minutes: 10`}
+setup_time_minutes: 10
+variables:
+  - key: PIPELINE_SHEET_ID
+    prompt: "Google Sheet ID for deal tracking"
+    description: "AI creates this for you during setup. Leave blank."
+    create: true
+    required: false`}
             </pre>
           </div>
         </section>

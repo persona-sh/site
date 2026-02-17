@@ -167,13 +167,25 @@ setup_time_minutes: 30
 variables:
   - key: TELEGRAM_BOT_TOKEN
     prompt: "Paste your Telegram bot token"
+    description: "Create a bot via @BotFather on Telegram. The token looks like 123456:ABC-DEF..."
     required: true
+  - key: DRIVE_ROOT_FOLDER_ID
+    prompt: "Google Drive folder ID where documents will be filed"
+    description: "The AI will create subfolders inside this folder. Open the folder in Drive, copy the ID from the URL."
+    create: false
+  - key: TRACKING_SHEET_ID
+    prompt: "Google Sheet ID for the tracking log"
+    description: "The AI creates this sheet for you during setup. Leave blank to auto-create."
+    create: true
 
 Key rules:
 - setup.md must number every step and mark which need human action vs. AI handles
 - Strip ALL credentials from workflow files. Use {{VARIABLE}} placeholders
 - Include expected outputs after key steps so users know it's working
 - Templates should contain example data, not be empty shells
+- Every variable must include a description explaining what valid values look like, where to find them, and whether the AI creates the resource or the user provides an existing one
+- If the blueprint depends on a folder structure, spreadsheet schema, or database schema, document the required structure in templates/ as a separate file. The installing AI needs to know "create these 4 folders" or "create a sheet with these columns" -- not just "put an ID here"
+- Workflow files should be functional templates: someone's AI should be able to read setup.md, create the required infrastructure, substitute the variables, and have a working system without reverse-engineering the author's intent
 
 =====================================
 SECTION 8: CATEGORIES
