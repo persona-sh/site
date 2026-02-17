@@ -15,7 +15,15 @@ const categoryColors: Record<string, string> = {
 };
 
 export default function PersonaCard({ persona }: { persona: PersonaEntry }) {
-  const colorClass = categoryColors[persona.category] || "bg-neutral-500/10 text-neutral-400 border-neutral-500/20";
+  const colorClass =
+    categoryColors[persona.category] ||
+    "bg-neutral-500/10 text-neutral-400 border-neutral-500/20";
+
+  const stats = [
+    persona.workflows.length > 0 && `${persona.workflows.length} workflow${persona.workflows.length > 1 ? "s" : ""}`,
+    persona.blueprints.length > 0 && `${persona.blueprints.length} blueprint${persona.blueprints.length > 1 ? "s" : ""}`,
+    persona.mcpServers.length > 0 && `${persona.mcpServers.length} integration${persona.mcpServers.length > 1 ? "s" : ""}`,
+  ].filter(Boolean);
 
   return (
     <Link href={`/persona/${persona.slug}`}>
@@ -24,7 +32,9 @@ export default function PersonaCard({ persona }: { persona: PersonaEntry }) {
           <h3 className="text-lg font-semibold text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors">
             {persona.displayName}
           </h3>
-          <span className="text-xs text-[var(--text-muted)] font-mono">v{persona.version}</span>
+          <span className="text-xs text-[var(--text-muted)] font-mono">
+            v{persona.version}
+          </span>
         </div>
 
         <p className="text-sm text-[var(--text-secondary)] mb-4 flex-grow leading-relaxed">
@@ -32,14 +42,19 @@ export default function PersonaCard({ persona }: { persona: PersonaEntry }) {
         </p>
 
         <div className="flex flex-wrap gap-1.5 mb-4">
-          <span className={`text-xs px-2 py-0.5 rounded-full border ${colorClass}`}>
+          <span
+            className={`text-xs px-2 py-0.5 rounded-full border ${colorClass}`}
+          >
             {persona.category}
           </span>
-          {persona.mcpServers.length > 0 && (
-            <span className="text-xs px-2 py-0.5 rounded-full border border-[var(--border)] text-[var(--text-muted)]">
-              {persona.mcpServers.length} integration{persona.mcpServers.length > 1 ? "s" : ""}
+          {stats.map((stat) => (
+            <span
+              key={stat as string}
+              className="text-xs px-2 py-0.5 rounded-full border border-[var(--border)] text-[var(--text-muted)]"
+            >
+              {stat}
             </span>
-          )}
+          ))}
         </div>
 
         <div className="flex items-center justify-between text-xs text-[var(--text-muted)]">

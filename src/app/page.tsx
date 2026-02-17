@@ -16,7 +16,8 @@ export default function Home() {
           <p className="text-xl text-[var(--text-secondary)] mb-8 leading-relaxed">
             Portable AI persona configurations you install in one sentence.
             Not tools. Not skills. Operating identities that shape how your
-            AI thinks, communicates, and works.
+            AI thinks, communicates, and works. Complete with project blueprints
+            your AI can build for you.
           </p>
           <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg px-6 py-4 inline-block text-sm text-left">
             <span className="text-[var(--text-primary)]">
@@ -105,9 +106,9 @@ export default function Home() {
               <div className="text-[var(--accent)] font-mono text-sm mb-2">03</div>
               <h3 className="font-semibold mb-2">Work</h3>
               <p className="text-sm text-[var(--text-secondary)]">
-                Your AI now has a personality. It communicates differently,
-                prioritizes differently, and operates with consistent behavior
-                across every session.
+                Your AI now has a personality and project blueprints.
+                It communicates differently, prioritizes differently, and
+                can build the same systems the persona author built.
               </p>
             </div>
           </div>
@@ -141,18 +142,20 @@ export default function Home() {
             Already have a persona?
           </h2>
           <p className="text-[var(--text-secondary)] mb-6">
-            If you&apos;ve customized your AI&apos;s behavior, you have a persona.
-            Package it and share it with the community.
+            If you&apos;ve customized your AI&apos;s behavior or built
+            automations with it, you have a persona. Package your identity
+            rules, workflows, and project systems so others can use them.
           </p>
           <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg px-6 py-4 inline-block text-sm text-left">
             <span className="text-[var(--text-primary)]">
-              &ldquo;Read my AI config files and package my setup as a
-              shareable persona. Follow the personalities.sh format.&rdquo;
+              &ldquo;Read the personalities.sh docs and package my current
+              setup as a persona. Include my project workflows as
+              blueprints.&rdquo;
             </span>
           </div>
           <p className="text-xs text-[var(--text-muted)] mt-3">
-            Your AI reads your config, strips personal info, and generates
-            a package anyone can install.
+            Your AI reads your config, strips personal info, bundles your
+            project systems, and generates a package anyone can install.
           </p>
         </div>
       </section>

@@ -3,180 +3,190 @@ export default function DocsPage() {
     <div className="px-6 py-12">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-3xl font-bold mb-2">Documentation</h1>
-        <p className="text-[var(--text-secondary)] mb-10">
-          Everything you need to understand, create, and publish personas.
+        <p className="text-[var(--text-secondary)] mb-4">
+          Everything you need to create, package, and publish a persona.
+        </p>
+        <p className="text-sm text-[var(--text-muted)] mb-10">
+          AI agents: this page contains the complete spec. Read it once and you
+          can generate a persona repo from any user&apos;s setup.
         </p>
 
+        {/* TOC */}
+        <nav className="mb-12 border border-[var(--border)] rounded-lg p-5">
+          <h2 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
+            On this page
+          </h2>
+          <div className="grid md:grid-cols-2 gap-1.5 text-sm">
+            {[
+              ["#what-is-a-persona", "What is a persona"],
+              ["#package-structure", "Package structure"],
+              ["#persona-md", "PERSONA.md sections"],
+              ["#persona-yaml", "persona.yaml schema"],
+              ["#blueprints", "Blueprints"],
+              ["#categories", "Categories"],
+              ["#variables", "Reserved variables"],
+              ["#commands", "Commands"],
+              ["#packaging-guide", "Packaging guide"],
+              ["#submit", "How to submit"],
+            ].map(([href, label]) => (
+              <a
+                key={href}
+                href={href}
+                className="text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors py-0.5"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+        </nav>
+
         {/* What is a persona */}
-        <section className="mb-12">
+        <section id="what-is-a-persona" className="mb-12">
           <h2 className="text-xl font-semibold mb-4">What is a persona?</h2>
           <p className="text-[var(--text-secondary)] mb-4 leading-relaxed">
             A persona is a portable AI behavioral configuration that defines who
             an AI agent IS, not just what it can do. It includes identity,
             communication style, behavioral rules, commands, memory templates,
-            and integration routing.
+            integrations, and blueprints for reproducible project systems.
           </p>
           <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-5 text-sm space-y-3">
             <div>
               <span className="text-[var(--text-muted)]">Tool:</span>{" "}
               <span className="text-[var(--text-secondary)]">
-                &ldquo;Search the web for X&rdquo; &mdash; single capability, stateless
+                &ldquo;Search the web for X&rdquo; &mdash; single capability,
+                stateless
               </span>
             </div>
             <div>
               <span className="text-[var(--text-muted)]">Skill:</span>{" "}
               <span className="text-[var(--text-secondary)]">
-                &ldquo;When asked about spreadsheets, follow these rules&rdquo; &mdash; domain
-                knowledge, conditional
+                &ldquo;When asked about spreadsheets, follow these rules&rdquo;
+                &mdash; domain knowledge, conditional
               </span>
             </div>
             <div>
               <span className="text-[var(--accent)]">Persona:</span>{" "}
               <span className="text-[var(--text-primary)]">
-                &ldquo;You are a strategic operator who pushes back on bad ideas and
-                acts instead of reporting&rdquo; &mdash; full identity, always-on, stateful
+                &ldquo;You are a strategic operator who pushes back on bad ideas
+                and acts instead of reporting&rdquo; &mdash; full identity,
+                always-on, stateful
               </span>
             </div>
           </div>
         </section>
 
-        {/* File structure */}
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold mb-4">Persona package structure</h2>
+        {/* Package structure */}
+        <section id="package-structure" className="mb-12">
+          <h2 className="text-xl font-semibold mb-4">Package structure</h2>
+          <p className="text-[var(--text-secondary)] mb-4">
+            A persona lives in a Git repo with this layout:
+          </p>
           <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-5 font-mono text-sm">
             <div className="space-y-1">
               <div>
                 <span className="text-[var(--text-primary)]">my-persona/</span>
               </div>
-              <div className="ml-4">
-                <span className="text-[var(--accent)]">persona.yaml</span>
-                <span className="text-[var(--text-muted)]">
-                  {" "}--- machine-readable metadata (required)
-                </span>
-              </div>
-              <div className="ml-4">
-                <span className="text-[var(--accent)]">PERSONA.md</span>
-                <span className="text-[var(--text-muted)]">
-                  {" "}--- identity, behavior, communication style (required)
-                </span>
-              </div>
-              <div className="ml-4">
-                <span className="text-[var(--accent)]">SETUP.md</span>
-                <span className="text-[var(--text-muted)]">
-                  {" "}--- dependencies and installation steps (required)
-                </span>
-              </div>
-              <div className="ml-4">
-                <span className="text-[var(--accent)]">README.md</span>
-                <span className="text-[var(--text-muted)]">
-                  {" "}--- catalog listing for humans (required)
-                </span>
-              </div>
-              <div className="ml-4">
-                <span className="text-[var(--text-secondary)]">commands/</span>
-                <span className="text-[var(--text-muted)]">
-                  {" "}--- slash command definitions (optional)
-                </span>
-              </div>
-              <div className="ml-4">
-                <span className="text-[var(--text-secondary)]">memory/</span>
-                <span className="text-[var(--text-muted)]">
-                  {" "}--- persistent state templates (optional)
-                </span>
-              </div>
-              <div className="ml-4">
-                <span className="text-[var(--text-secondary)]">skills/</span>
-                <span className="text-[var(--text-muted)]">
-                  {" "}--- domain knowledge files (optional)
-                </span>
-              </div>
-              <div className="ml-4">
-                <span className="text-[var(--text-secondary)]">examples/</span>
-                <span className="text-[var(--text-muted)]">
-                  {" "}--- sample interactions (optional, recommended)
-                </span>
-              </div>
+              {[
+                [true, "persona.yaml", "machine-readable metadata"],
+                [true, "PERSONA.md", "identity, behavior, communication style"],
+                [true, "SETUP.md", "dependencies and installation steps"],
+                [true, "README.md", "description for humans"],
+                [false, "commands/", "slash command definitions"],
+                [false, "memory/", "persistent state templates"],
+                [false, "skills/", "domain knowledge files"],
+                [false, "examples/", "sample interactions"],
+                [false, "blueprints/", "reproducible project systems"],
+              ].map(([req, name, desc]) => (
+                <div key={name as string} className="ml-4">
+                  <span
+                    className={
+                      req
+                        ? "text-[var(--accent)]"
+                        : "text-[var(--text-secondary)]"
+                    }
+                  >
+                    {name as string}
+                  </span>
+                  <span className="text-[var(--text-muted)]">
+                    {" "}
+                    &mdash; {desc as string}{" "}
+                    {req ? "(required)" : "(optional)"}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
         {/* PERSONA.md */}
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold mb-4">PERSONA.md sections</h2>
+        <section id="persona-md" className="mb-12">
+          <h2 className="text-xl font-semibold mb-4">PERSONA.md</h2>
           <p className="text-[var(--text-secondary)] mb-4">
-            The identity document. Three sections are required. The rest are optional
-            but improve quality.
+            The identity document. Gets loaded into the AI&apos;s context every
+            session. Three sections are required.
           </p>
           <div className="space-y-3">
-            <div className="border border-[var(--border)] rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-1">
-                <h3 className="font-semibold text-sm">## Identity</h3>
-                <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--accent-dim)] text-[var(--accent)]">
-                  required
-                </span>
+            {[
+              {
+                name: "## Identity",
+                req: true,
+                desc: 'Who this persona IS. Role, primary directive, relationship to the user. 3-10 sentences in second person ("You are...").',
+              },
+              {
+                name: "## Communication Style",
+                req: true,
+                desc: "How the persona talks. Tone, formatting, vocabulary, specific DO and DON'T rules. Minimum 3 concrete instructions.",
+              },
+              {
+                name: "## Behavioral Rules",
+                req: true,
+                desc: "Hard constraints and NEVER/ALWAYS rules. Confidentiality, authorization boundaries, uncertainty handling. Minimum 2 rules.",
+              },
+              {
+                name: "## Context",
+                req: false,
+                desc: "Company details, team structure, industry, key systems. Use {{VARIABLES}} for personal data.",
+              },
+              {
+                name: "## Operating Modes",
+                req: false,
+                desc: "Named behavioral modes (triage, drafting, research). Each mode has an activation trigger and specific rules.",
+              },
+              {
+                name: "## Integrations",
+                req: false,
+                desc: "MCP server routing, tool preferences, and fallback behavior when integrations are disconnected.",
+              },
+            ].map((section) => (
+              <div
+                key={section.name}
+                className="border border-[var(--border)] rounded-lg p-4"
+              >
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="font-semibold text-sm">{section.name}</h3>
+                  {section.req && (
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--accent-dim)] text-[var(--accent)]">
+                      required
+                    </span>
+                  )}
+                </div>
+                <p className="text-sm text-[var(--text-secondary)]">
+                  {section.desc}
+                </p>
               </div>
-              <p className="text-sm text-[var(--text-secondary)]">
-                Who this persona IS. Role, primary directive, relationship to the user.
-                3-10 sentences in second person (&ldquo;You are...&rdquo;).
-              </p>
-            </div>
-            <div className="border border-[var(--border)] rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-1">
-                <h3 className="font-semibold text-sm">## Communication Style</h3>
-                <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--accent-dim)] text-[var(--accent)]">
-                  required
-                </span>
-              </div>
-              <p className="text-sm text-[var(--text-secondary)]">
-                How the persona talks. Tone, formatting, vocabulary, specific DO
-                and DON&apos;T rules. Minimum 3 concrete instructions.
-              </p>
-            </div>
-            <div className="border border-[var(--border)] rounded-lg p-4">
-              <div className="flex items-center gap-2 mb-1">
-                <h3 className="font-semibold text-sm">## Behavioral Rules</h3>
-                <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--accent-dim)] text-[var(--accent)]">
-                  required
-                </span>
-              </div>
-              <p className="text-sm text-[var(--text-secondary)]">
-                Hard constraints and NEVER/ALWAYS rules. Confidentiality, authorization
-                boundaries, uncertainty handling. Minimum 2 rules.
-              </p>
-            </div>
-            <div className="border border-[var(--border)] rounded-lg p-4">
-              <h3 className="font-semibold text-sm mb-1">## Context</h3>
-              <p className="text-sm text-[var(--text-secondary)]">
-                Company details, team structure, industry, key systems.
-                Use {"{{VARIABLES}}"} for personal data.
-              </p>
-            </div>
-            <div className="border border-[var(--border)] rounded-lg p-4">
-              <h3 className="font-semibold text-sm mb-1">## Operating Modes</h3>
-              <p className="text-sm text-[var(--text-secondary)]">
-                Named behavioral modes (triage, drafting, research). Each mode
-                has an activation trigger and specific rules.
-              </p>
-            </div>
-            <div className="border border-[var(--border)] rounded-lg p-4">
-              <h3 className="font-semibold text-sm mb-1">## Integrations</h3>
-              <p className="text-sm text-[var(--text-secondary)]">
-                MCP server routing, tool preferences, and fallback behavior when
-                integrations are disconnected.
-              </p>
-            </div>
+            ))}
           </div>
         </section>
 
         {/* persona.yaml */}
-        <section className="mb-12">
+        <section id="persona-yaml" className="mb-12">
           <h2 className="text-xl font-semibold mb-4">persona.yaml</h2>
           <p className="text-[var(--text-secondary)] mb-4">
-            Machine-readable metadata. This is what the catalog indexes and the
-            installer reads.
+            Machine-readable metadata. This is what the catalog indexes.
           </p>
           <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-5 font-mono text-sm leading-relaxed">
-            <pre className="text-[var(--text-secondary)] whitespace-pre-wrap">{`name: my-persona          # lowercase, hyphens, 3-40 chars
+            <pre className="text-[var(--text-secondary)] whitespace-pre-wrap">
+              {`name: my-persona          # lowercase, hyphens, 3-40 chars
 display_name: My Persona   # human-readable
 version: 1.0.0             # semver
 description: >
@@ -186,7 +196,7 @@ author:
   name: Your Name
   github: your-username
 
-category: executive         # see allowed categories
+category: executive         # see categories below
 tags: [tag1, tag2, tag3]    # 2-8 tags
 
 requires_mcp:               # optional
@@ -197,13 +207,116 @@ requires_mcp:               # optional
 variables:                  # optional
   - key: YOUR_NAME
     prompt: "What's your name?"
-    required: true`}</pre>
+    required: true
+
+blueprints:                 # optional
+  - telegram-intake         # names of dirs in blueprints/
+  - accounting-pipeline`}
+            </pre>
+          </div>
+        </section>
+
+        {/* Blueprints */}
+        <section id="blueprints" className="mb-12">
+          <h2 className="text-xl font-semibold mb-4">Blueprints</h2>
+          <p className="text-[var(--text-secondary)] mb-4 leading-relaxed">
+            Blueprints are reproducible project systems bundled in the persona
+            repo. A command tells the AI what to do in a conversation. A
+            blueprint gives the AI the complete architecture for a system it
+            builds once and then operates.
+          </p>
+          <p className="text-sm text-[var(--text-muted)] mb-4">
+            Examples: a Telegram bot that files documents to Google Drive, an
+            accounting pipeline with a custom spreadsheet, a multi-workflow
+            automation suite, a partnership tracking system.
+          </p>
+
+          <h3 className="text-sm font-semibold mb-3">Blueprint structure</h3>
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-5 font-mono text-sm mb-6">
+            <div className="space-y-1">
+              <div>
+                <span className="text-[var(--text-primary)]">
+                  blueprints/telegram-intake/
+                </span>
+              </div>
+              {[
+                ["blueprint.yaml", "metadata, prerequisites, outcomes"],
+                ["README.md", "what it builds and who it's for"],
+                ["setup.md", "step-by-step build instructions"],
+                ["workflows/", "n8n JSON, Zapier configs, automation files"],
+                ["templates/", "spreadsheet templates, folder structures"],
+              ].map(([name, desc]) => (
+                <div key={name} className="ml-4">
+                  <span className="text-[var(--accent)]">{name}</span>
+                  <span className="text-[var(--text-muted)]">
+                    {" "}
+                    &mdash; {desc}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <h3 className="text-sm font-semibold mb-3">blueprint.yaml</h3>
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-5 font-mono text-sm leading-relaxed mb-6">
+            <pre className="text-[var(--text-secondary)] whitespace-pre-wrap">
+              {`name: telegram-intake
+display_name: Telegram Document Intake
+version: 1.0.0
+description: >
+  Telegram bot that receives documents, classifies
+  them with AI, and files them to Google Drive.
+complexity: complex    # simple | medium | complex
+
+requires:
+  services:
+    - name: n8n
+      purpose: "Workflow automation engine"
+      required: true
+    - name: telegram-bot
+      purpose: "Telegram Bot API token"
+      required: true
+    - name: google-drive
+      purpose: "File storage destination"
+      required: true
+
+outcomes:
+  - "Documents sent to Telegram are auto-classified and filed"
+  - "Every document logged in a tracking spreadsheet"
+  - "AI renames files with standardized naming"
+
+setup_time_minutes: 30
+
+variables:
+  - key: TELEGRAM_BOT_TOKEN
+    prompt: "Paste your Telegram bot token"
+    required: true`}
+            </pre>
+          </div>
+
+          <h3 className="text-sm font-semibold mb-3">Key rules</h3>
+          <div className="space-y-2 text-sm text-[var(--text-secondary)]">
+            {[
+              "setup.md must number every step and mark which need human action (OAuth clicks, token creation) vs. which the AI handles",
+              "Strip ALL credentials from workflow files. Use {{VARIABLE}} placeholders",
+              "Include expected outputs after key steps so users know it's working",
+              "Templates should contain example data, not be empty shells",
+              "Be honest about complexity and setup time",
+            ].map((rule, i) => (
+              <div key={i} className="flex items-start gap-2.5">
+                <span className="text-[var(--accent)] mt-0.5 shrink-0">~</span>
+                <span>{rule}</span>
+              </div>
+            ))}
           </div>
         </section>
 
         {/* Categories */}
-        <section className="mb-12">
+        <section id="categories" className="mb-12">
           <h2 className="text-xl font-semibold mb-4">Categories</h2>
+          <p className="text-[var(--text-secondary)] mb-4">
+            Every persona gets exactly one category. Pick the best fit.
+          </p>
           <div className="grid grid-cols-2 gap-2 text-sm">
             {[
               ["executive", "C-suite support, leadership, strategy"],
@@ -222,17 +335,19 @@ variables:                  # optional
                 className="border border-[var(--border)] rounded-lg p-3"
               >
                 <span className="font-mono text-[var(--accent)]">{slug}</span>
-                <p className="text-[var(--text-muted)] text-xs mt-0.5">{desc}</p>
+                <p className="text-[var(--text-muted)] text-xs mt-0.5">
+                  {desc}
+                </p>
               </div>
             ))}
           </div>
         </section>
 
         {/* Variables */}
-        <section className="mb-12">
+        <section id="variables" className="mb-12">
           <h2 className="text-xl font-semibold mb-4">Reserved variables</h2>
           <p className="text-[var(--text-secondary)] mb-4">
-            Use {"{{VARIABLE}}"} placeholders for personal data. These names have
+            Use {"{{VARIABLE}}"} placeholders for personal data. These have
             standard meanings across all personas.
           </p>
           <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg overflow-hidden">
@@ -258,7 +373,10 @@ variables:                  # optional
                   ["YOUR_CURRENCY", "ISO currency code"],
                   ["YOUR_LANGUAGE", "Primary language"],
                 ].map(([key, val]) => (
-                  <tr key={key} className="border-b border-[var(--border)] last:border-0">
+                  <tr
+                    key={key}
+                    className="border-b border-[var(--border)] last:border-0"
+                  >
                     <td className="p-3 font-mono text-[var(--accent)] text-xs">
                       {`{{${key}}}`}
                     </td>
@@ -270,92 +388,285 @@ variables:                  # optional
           </div>
         </section>
 
-        {/* Security */}
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold mb-4">Security evaluation</h2>
+        {/* Commands */}
+        <section id="commands" className="mb-12">
+          <h2 className="text-xl font-semibold mb-4">Commands</h2>
           <p className="text-[var(--text-secondary)] mb-4">
-            Every submission is scanned before listing.
+            Slash commands live in <code className="text-[var(--accent)]">commands/</code>.
+            Each file is one command. The filename becomes the command name.
           </p>
-          <div className="space-y-3 text-sm">
-            <div className="flex gap-3">
-              <span className="text-[var(--accent)] shrink-0">01</span>
-              <span className="text-[var(--text-secondary)]">
-                Credential leak detection (API keys, tokens, passwords, connection strings)
-              </span>
-            </div>
-            <div className="flex gap-3">
-              <span className="text-[var(--accent)] shrink-0">02</span>
-              <span className="text-[var(--text-secondary)]">
-                Prompt injection scanning (override attempts, data exfiltration, hidden instructions)
-              </span>
-            </div>
-            <div className="flex gap-3">
-              <span className="text-[var(--accent)] shrink-0">03</span>
-              <span className="text-[var(--text-secondary)]">
-                Dangerous operation detection (file deletion, unsolicited network requests, credential access)
-              </span>
-            </div>
-            <div className="flex gap-3">
-              <span className="text-[var(--accent)] shrink-0">04</span>
-              <span className="text-[var(--text-secondary)]">
-                MCP server validation against known-good registry
-              </span>
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-5 font-mono text-sm leading-relaxed">
+            <pre className="text-[var(--text-secondary)] whitespace-pre-wrap">
+              {`# commands/gm.md
+---
+name: gm
+description: Morning briefing
+---
+
+# /gm - Good Morning Briefing
+
+## Step 1: Email Triage
+1. Fetch unread emails from last 12 hours
+2. Classify into Tier 1 (urgent), Tier 2, Tier 3
+3. Draft responses for Tier 1
+
+## Step 2: Calendar Review
+1. Fetch today's events
+2. Flag back-to-back meetings
+
+## Output Format
+EMAIL: [count] unread. [count] urgent.
+CALENDAR: [count] meetings today.
+GOALS: Top goal status + suggested action.`}
+            </pre>
+          </div>
+        </section>
+
+        {/* Packaging Guide */}
+        <section id="packaging-guide" className="mb-12">
+          <h2 className="text-xl font-semibold mb-4">
+            How to create a persona
+          </h2>
+          <p className="text-[var(--text-secondary)] mb-2">
+            If you&apos;ve customized your AI&apos;s behavior, you already have
+            a persona. Here&apos;s how to package it.
+          </p>
+          <p className="text-sm text-[var(--text-muted)] mb-6">
+            Open your AI agent, paste the prompt below, and let it do the work.
+          </p>
+
+          <div className="bg-[var(--bg-secondary)] border-2 border-[var(--accent)] rounded-lg p-6 mb-6">
+            <h3 className="text-sm font-semibold text-[var(--accent)] uppercase tracking-wider mb-3">
+              Copy this prompt and paste it into your AI agent
+            </h3>
+            <div className="text-sm text-[var(--text-primary)] leading-relaxed space-y-4">
+              <p>
+                Read the personalities.sh format spec at{" "}
+                <span className="text-[var(--accent)]">
+                  https://site-self-rho.vercel.app/docs
+                </span>{" "}
+                and package my current AI setup as a persona repo. Follow these
+                steps:
+              </p>
+              <p>
+                1. Scan my config files (CLAUDE.md, .cursorrules, commands/,
+                settings.json, any YAML state files) and report what you find.
+              </p>
+              <p>
+                2. Analyze the config: identity, communication rules,
+                constraints, integrations, commands, persistent state, domain
+                knowledge.
+              </p>
+              <p>
+                3. Check for project systems I&apos;ve built (automations, bots,
+                tracking spreadsheets, workflows). Package each as a blueprint
+                with setup.md, workflow files, and templates.
+              </p>
+              <p>
+                4. Replace all personal data with {"{{VARIABLE}}"} placeholders.
+                Strip API keys, credentials, and absolute paths.
+              </p>
+              <p>
+                5. Generate the full package: persona.yaml, PERSONA.md (with
+                Identity, Communication Style, Behavioral Rules sections),
+                SETUP.md, README.md, commands/, blueprints/ if applicable.
+              </p>
+              <p>
+                6. Show me the file structure and key files for review before
+                writing to disk.
+              </p>
             </div>
           </div>
-          <div className="mt-4 space-y-2 text-sm">
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-green-500"></span>
-              <span className="text-[var(--text-secondary)]">
-                <strong className="text-[var(--text-primary)]">Verified</strong> &mdash; all checks passed, manual review completed
+
+          <p className="text-sm text-[var(--text-secondary)] mb-4">
+            Your AI will scan your setup, strip personal info, and generate a
+            package that follows the spec. Review it, then push to GitHub and
+            submit.
+          </p>
+
+          <div className="border border-[var(--border)] rounded-lg p-5">
+            <h3 className="text-sm font-semibold mb-3">
+              What makes a good persona
+            </h3>
+            <div className="space-y-2 text-sm text-[var(--text-secondary)]">
+              {[
+                [
+                  "Specific over general.",
+                  '"You are a legal analyst specializing in UAE free zone regulations" beats "You are a helpful legal expert."',
+                ],
+                [
+                  "Rules over vibes.",
+                  '"Never use more than 8 words in an email subject line" beats "Keep subject lines concise."',
+                ],
+                [
+                  "Examples matter.",
+                  "A persona with 5 sample interactions outperforms one with 50 behavioral rules.",
+                ],
+                [
+                  "Blueprints are the differentiator.",
+                  "Anyone can write personality rules. Bundling your actual project systems is what makes people install yours.",
+                ],
+                [
+                  "Degrade gracefully.",
+                  "If an MCP server is missing, note it and continue. Don't break.",
+                ],
+              ].map(([bold, rest], i) => (
+                <div key={i} className="flex items-start gap-2.5">
+                  <span className="text-[var(--accent)] mt-0.5 shrink-0">
+                    ~
+                  </span>
+                  <span>
+                    <strong className="text-[var(--text-primary)]">
+                      {bold}
+                    </strong>{" "}
+                    {rest}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Submit */}
+        <section id="submit" className="mb-12">
+          <h2 className="text-xl font-semibold mb-4">How to submit</h2>
+          <p className="text-[var(--text-secondary)] mb-6">
+            Once your persona repo is on GitHub, submit it to the catalog.
+          </p>
+          <div className="space-y-4">
+            <div className="flex gap-3">
+              <span className="text-[var(--accent)] shrink-0 font-mono">
+                1.
+              </span>
+              <span className="text-sm text-[var(--text-secondary)]">
+                Push your persona package to a public GitHub repo. If you need
+                help, tell your AI: &ldquo;Create a GitHub repo called
+                my-persona and push this folder to it.&rdquo;
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-blue-500"></span>
-              <span className="text-[var(--text-secondary)]">
-                <strong className="text-[var(--text-primary)]">Community</strong> &mdash; automated checks passed
+            <div className="flex gap-3">
+              <span className="text-[var(--accent)] shrink-0 font-mono">
+                2.
+              </span>
+              <span className="text-sm text-[var(--text-secondary)]">
+                Go to the{" "}
+                <a
+                  href="/submit"
+                  className="text-[var(--accent)] hover:underline"
+                >
+                  submit page
+                </a>{" "}
+                and paste your repo URL.
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-yellow-500"></span>
-              <span className="text-[var(--text-secondary)]">
-                <strong className="text-[var(--text-primary)]">Unreviewed</strong> &mdash; pending evaluation
+            <div className="flex gap-3">
+              <span className="text-[var(--accent)] shrink-0 font-mono">
+                3.
+              </span>
+              <span className="text-sm text-[var(--text-secondary)]">
+                Your persona will appear in the catalog.
               </span>
             </div>
           </div>
         </section>
 
-        {/* Create your own */}
-        <section className="mb-12">
-          <h2 className="text-xl font-semibold mb-4">Create a persona</h2>
+        {/* Full example */}
+        <section className="mb-12 border-t border-[var(--border)] pt-10">
+          <h2 className="text-xl font-semibold mb-4">Complete example</h2>
           <p className="text-[var(--text-secondary)] mb-4">
-            If you&apos;ve customized your AI&apos;s behavior, you already have a persona.
-            Package it:
+            A minimal but complete persona repo:
           </p>
-          <div className="space-y-4 text-sm text-[var(--text-secondary)]">
-            <div className="flex gap-3">
-              <span className="text-[var(--accent)] shrink-0 font-mono">1.</span>
-              <span>
-                Open your AI coding agent and paste the{" "}
-                <a href="/submit" className="text-[var(--accent)] hover:underline">
-                  packaging guide
-                </a>
-              </span>
-            </div>
-            <div className="flex gap-3">
-              <span className="text-[var(--accent)] shrink-0 font-mono">2.</span>
-              <span>
-                Say: &ldquo;Package my current setup as a persona. Follow these instructions.&rdquo;
-              </span>
-            </div>
-            <div className="flex gap-3">
-              <span className="text-[var(--accent)] shrink-0 font-mono">3.</span>
-              <span>Review the generated files. Strip anything private.</span>
-            </div>
-            <div className="flex gap-3">
-              <span className="text-[var(--accent)] shrink-0 font-mono">4.</span>
-              <span>Push to GitHub and submit to the catalog.</span>
-            </div>
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-5 font-mono text-sm leading-relaxed">
+            <pre className="text-[var(--text-secondary)] whitespace-pre-wrap">
+              {`# persona.yaml
+name: sales-closer
+display_name: Sales Closer
+version: 1.0.0
+description: >
+  Pipeline management and deal execution for B2B
+  sales teams. Tracks prospects, drafts follow-ups,
+  and scores deals by close probability.
+author:
+  name: Jane Smith
+  github: janesmith
+category: sales
+tags: [sales, b2b, pipeline, deal-closing, crm]
+requires_mcp:
+  - name: gmail
+    required: true
+    purpose: "Prospect communication"
+  - name: google-sheets
+    required: false
+    purpose: "Pipeline tracking"
+variables:
+  - key: YOUR_NAME
+    prompt: "Your full name?"
+    required: true
+  - key: YOUR_COMPANY
+    prompt: "Company name?"
+    required: true
+blueprints:
+  - deal-tracker
+
+---
+
+# PERSONA.md
+
+## Identity
+
+You are the Sales Closer for {{YOUR_NAME}} at
+{{YOUR_COMPANY}}. Your job is to move deals through
+the pipeline and close them. You track every prospect,
+draft follow-up emails in the user's voice, and flag
+deals that are going cold.
+
+## Communication Style
+
+- Direct and numbers-driven. Lead with metrics.
+- No fluff. "Deal X is 60% likely to close by March"
+  not "Deal X is looking promising."
+- Match the user's tone in prospect communications.
+
+## Behavioral Rules
+
+- NEVER send an email to a prospect without approval.
+- NEVER share pipeline data outside the conversation.
+- Flag any deal with no activity in 14+ days.
+
+---
+
+# blueprints/deal-tracker/blueprint.yaml
+name: deal-tracker
+display_name: Deal Tracking Pipeline
+version: 1.0.0
+description: >
+  Google Sheets pipeline tracker with automated
+  follow-up reminders and close probability scoring.
+complexity: simple
+requires:
+  services:
+    - name: google-sheets
+      purpose: "Pipeline spreadsheet"
+      required: true
+outcomes:
+  - "All deals tracked in one sheet with status and probability"
+  - "Automated reminders when deals go cold"
+setup_time_minutes: 10`}
+            </pre>
           </div>
+        </section>
+
+        {/* Spec repo link */}
+        <section className="text-center text-sm text-[var(--text-muted)]">
+          <p>
+            Full technical spec, packaging guide, and classifier prompt:{" "}
+            <a
+              href="https://github.com/adbcjay/personalities-sh-spec"
+              className="text-[var(--accent)] hover:underline"
+            >
+              github.com/adbcjay/personalities-sh-spec
+            </a>
+          </p>
         </section>
       </div>
     </div>
