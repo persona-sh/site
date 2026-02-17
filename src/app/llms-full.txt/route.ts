@@ -82,6 +82,26 @@ workflows:                  # optional, slash commands
 blueprints:                 # optional
   - telegram-intake         # names of dirs in blueprints/
 
+delegates_to:               # optional, personas this one delegates work to
+  - persona: opnet-builder  # slug or repo URL
+    purpose: "Smart contract development"
+  - persona: frontend-designer
+    purpose: "React frontend work"
+
+modes:                      # optional, structured operating modes
+  - name: group-chat        # machine-readable identifier
+    trigger:                # when this mode activates
+      channel: telegram-group
+    description: "Terse, roasts welcome, only responds to @mentions"
+  - name: direct
+    trigger:
+      channel: dm
+    description: "Full helpfulness, detailed responses"
+  - name: audit
+    trigger:
+      command: /audit
+    description: "Security-focused, strict, checklist-driven"
+
 highlights:                 # 3-9 key features for catalog
   - "What makes this persona distinct"
 
@@ -89,7 +109,7 @@ repository: https://github.com/you/my-persona
 
 Required fields: name, display_name, version, description, author (name + github), category, tags
 Recommended: compatible_with, highlights, repository, variables
-Optional: integrations, required_skills, workflows, blueprints
+Optional: integrations, required_skills, workflows, blueprints, delegates_to, modes
 
 =====================================
 SECTION 4: PERSONA.md SECTIONS
@@ -196,6 +216,7 @@ Key rules:
 - Every variable must include a description explaining what valid values look like, where to find them, and whether the AI creates the resource or the user provides an existing one
 - If the blueprint depends on a folder structure, spreadsheet schema, or database schema, document the required structure in templates/ as a separate file. The installing AI needs to know "create these 4 folders" or "create a sheet with these columns" -- not just "put an ID here"
 - Workflow files should be functional templates: someone's AI should be able to read setup.md, create the required infrastructure, substitute the variables, and have a working system without reverse-engineering the author's intent
+- Be honest about complexity and setup time
 
 =====================================
 SECTION 8: CATEGORIES
@@ -275,8 +296,10 @@ Quality:
 [] highlights array has 3-9 entries
 [] description is 1-3 sentences
 [] If blueprints exist: each has blueprint.yaml, README.md, setup.md
-[] If workflows exist: each has command, name, description
+[] If workflows exist: each has command (starting with /), name, description
 [] If required_skills exist: each has name, install command, and purpose
+[] If delegates_to exist: each has persona (slug or repo URL) and purpose
+[] If modes exist: each has name, trigger (channel or command), and description
 
 =====================================
 SECTION 12: HOW TO CREATE A PERSONA

@@ -355,6 +355,26 @@ blueprints:                 # optional
   - telegram-intake         # names of dirs in blueprints/
   - accounting-pipeline
 
+delegates_to:               # optional, personas this one delegates work to
+  - persona: opnet-builder  # slug or repo URL
+    purpose: "Smart contract development"
+  - persona: frontend-designer
+    purpose: "React frontend work"
+
+modes:                      # optional, structured operating modes
+  - name: group-chat        # machine-readable identifier
+    trigger:                # when this mode activates
+      channel: telegram-group
+    description: "Terse, roasts welcome, only responds to @mentions"
+  - name: direct
+    trigger:
+      channel: dm
+    description: "Full helpfulness, detailed responses"
+  - name: audit
+    trigger:
+      command: /audit
+    description: "Security-focused, strict, checklist-driven"
+
 highlights:                 # 3-9 key features for catalog
   - "What makes this persona distinct, bullet 1"
   - "What makes this persona distinct, bullet 2"
@@ -366,7 +386,7 @@ repository: https://github.com/you/my-persona`}
           <div className="mt-4 space-y-2 text-sm text-[var(--text-secondary)]">
             <p><strong className="text-[var(--text-primary)]">Required fields:</strong> name, display_name, version, description, author (name + github), category, tags</p>
             <p><strong className="text-[var(--text-primary)]">Recommended:</strong> compatible_with, highlights, repository, variables</p>
-            <p><strong className="text-[var(--text-primary)]">Optional:</strong> integrations, required_skills, workflows, blueprints</p>
+            <p><strong className="text-[var(--text-primary)]">Optional:</strong> integrations, required_skills, workflows, blueprints, delegates_to, modes</p>
             <p className="text-[var(--text-muted)] mt-2 text-xs">
               <strong>Note on compatible_with:</strong> Persona packages are plain markdown files. They work with ANY AI agent that reads config files. The compatible_with field lists agents the author has tested with, not agents it&apos;s limited to. If an agent isn&apos;t listed, the persona still works -- the author just hasn&apos;t verified it.
             </p>
@@ -809,6 +829,8 @@ GOALS: Top goal status + suggested action.`}
                   "If blueprints exist: each has blueprint.yaml, README.md, and setup.md with numbered steps",
                   "If workflows exist: each has command (starting with /), name, and description",
                   "If required_skills exist: each has name, install command, and purpose",
+                  "If delegates_to exist: each has persona (slug or repo URL) and purpose",
+                  "If modes exist: each has name, trigger (channel or command), and description",
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="text-[var(--accent)] shrink-0">[]</span>
