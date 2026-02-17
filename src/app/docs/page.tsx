@@ -20,14 +20,18 @@ export default function DocsPage() {
             {[
               ["#what-is-a-persona", "What is a persona"],
               ["#package-structure", "Package structure"],
-              ["#persona-md", "PERSONA.md sections"],
               ["#persona-yaml", "persona.yaml schema"],
+              ["#persona-md", "PERSONA.md sections"],
+              ["#setup-md", "SETUP.md spec"],
+              ["#readme-md", "README.md spec"],
               ["#blueprints", "Blueprints"],
               ["#categories", "Categories"],
               ["#variables", "Reserved variables"],
               ["#commands", "Commands"],
               ["#packaging-guide", "Packaging guide"],
+              ["#validation", "Validation checklist"],
               ["#submit", "How to submit"],
+              ["#complete-example", "Complete example"],
             ].map(([href, label]) => (
               <a
                 key={href}
@@ -178,6 +182,113 @@ export default function DocsPage() {
           </div>
         </section>
 
+        {/* SETUP.md */}
+        <section id="setup-md" className="mb-12">
+          <h2 className="text-xl font-semibold mb-4">SETUP.md</h2>
+          <p className="text-[var(--text-secondary)] mb-4">
+            Installation instructions. Must work for both AI-assisted and manual setup.
+          </p>
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-5 font-mono text-sm leading-relaxed">
+            <pre className="text-[var(--text-secondary)] whitespace-pre-wrap">
+              {`# Setup
+
+## Quick Install (AI-assisted)
+
+Paste into your AI agent:
+
+\`\`\`
+Install the [Display Name] persona from
+github.com/you/my-persona -- clone the repo,
+read the setup instructions, ask me for my
+personal details, replace all template variables,
+copy the files to the right config locations,
+and walk me through connecting any integrations.
+\`\`\`
+
+## Manual Installation
+
+### 1. Clone the repo
+\`\`\`bash
+git clone https://github.com/you/my-persona.git
+\`\`\`
+
+### 2. Edit PERSONA.md
+Replace all {{VARIABLE}} placeholders with your info.
+
+### 3. Copy to your AI agent's config
+- Claude Code: ~/.claude/CLAUDE.md
+- Cursor: .cursorrules in project root
+- Windsurf: .windsurfrules in project root
+- OpenClaw: personality file in config directory
+- ZeroClaw: agent config in workspace
+- Or any agent that reads markdown config files
+
+### 4. Connect integrations (if applicable)
+[List each MCP server or API with setup steps]
+
+### 5. Test it works
+[Provide a test prompt the user can run to verify]`}
+            </pre>
+          </div>
+          <div className="mt-3 text-sm text-[var(--text-muted)]">
+            <p>Both paths must be present. The AI-assisted path is the one-sentence install prompt. The manual path numbers every step.</p>
+          </div>
+        </section>
+
+        {/* README.md */}
+        <section id="readme-md" className="mb-12">
+          <h2 className="text-xl font-semibold mb-4">README.md</h2>
+          <p className="text-[var(--text-secondary)] mb-4">
+            Human-readable description. This is what people see on GitHub before installing.
+          </p>
+          <div className="space-y-3">
+            {[
+              {
+                name: "What This Is",
+                req: true,
+                desc: "1-2 paragraphs. What the persona does, who it's for, what makes it different from a generic AI.",
+              },
+              {
+                name: "What It Does",
+                req: true,
+                desc: "Bullet list of key behaviors and capabilities. Pull from your highlights.",
+              },
+              {
+                name: "Install",
+                req: true,
+                desc: "The one-sentence AI install prompt. Same as the quick install in SETUP.md.",
+              },
+              {
+                name: "Blueprints",
+                req: false,
+                desc: "Table of included project systems: name, complexity, what it builds. Only if your persona has blueprints.",
+              },
+              {
+                name: "Compatible With",
+                req: true,
+                desc: "List of AI agents this works with (Claude Code, Cursor, Windsurf, etc.).",
+              },
+            ].map((section) => (
+              <div
+                key={section.name}
+                className="border border-[var(--border)] rounded-lg p-4"
+              >
+                <div className="flex items-center gap-2 mb-1">
+                  <h3 className="font-semibold text-sm">{section.name}</h3>
+                  {section.req && (
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-[var(--accent-dim)] text-[var(--accent)]">
+                      required
+                    </span>
+                  )}
+                </div>
+                <p className="text-sm text-[var(--text-secondary)]">
+                  {section.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* persona.yaml */}
         <section id="persona-yaml" className="mb-12">
           <h2 className="text-xl font-semibold mb-4">persona.yaml</h2>
@@ -199,6 +310,15 @@ author:
 category: executive         # see categories below
 tags: [tag1, tag2, tag3]    # 2-8 tags
 
+compatible_with:            # which AI agents
+  - Claude Code
+  - Cursor
+  - Windsurf
+  - OpenClaw
+  - ZeroClaw
+  - Codex CLI
+  - Copilot
+
 requires_mcp:               # optional
   - name: gmail
     required: true
@@ -209,10 +329,30 @@ variables:                  # optional
     prompt: "What's your name?"
     required: true
 
+workflows:                  # optional, slash commands
+  - command: /gm
+    name: Morning Briefing
+    description: "Pulls calendar, tasks, inbox"
+  - command: /triage
+    name: Inbox Triage
+    description: "Scans and classifies messages"
+
 blueprints:                 # optional
   - telegram-intake         # names of dirs in blueprints/
-  - accounting-pipeline`}
+  - accounting-pipeline
+
+highlights:                 # 3-9 key features for catalog
+  - "What makes this persona distinct, bullet 1"
+  - "What makes this persona distinct, bullet 2"
+  - "What makes this persona distinct, bullet 3"
+
+repository: https://github.com/you/my-persona`}
             </pre>
+          </div>
+          <div className="mt-4 space-y-2 text-sm text-[var(--text-secondary)]">
+            <p><strong className="text-[var(--text-primary)]">Required fields:</strong> name, display_name, version, description, author (name + github), category, tags</p>
+            <p><strong className="text-[var(--text-primary)]">Recommended:</strong> compatible_with, highlights, repository, variables</p>
+            <p><strong className="text-[var(--text-primary)]">Optional:</strong> requires_mcp, workflows, blueprints</p>
           </div>
         </section>
 
@@ -319,16 +459,20 @@ variables:
           </p>
           <div className="grid grid-cols-2 gap-2 text-sm">
             {[
-              ["executive", "C-suite support, leadership, strategy"],
-              ["professional-services", "Legal, finance, compliance, HR"],
-              ["developer", "Code review, DevOps, architecture"],
-              ["creative", "Writing, content, design, brand"],
-              ["research", "Academic, market research, analysis"],
-              ["domain-specialist", "Industry-specific expertise"],
-              ["personal", "Fitness, finance, learning, life admin"],
-              ["operations", "Project management, workflows"],
-              ["sales", "CRM, pipeline, outreach, proposals"],
-              ["support", "Customer service, documentation"],
+              ["executive", "C-suite support, leadership, strategy, chief of staff"],
+              ["professional-services", "Consulting, compliance, HR, advisory"],
+              ["developer", "Code review, DevOps, architecture, language-specific"],
+              ["creative", "Writing, content, design, brand, voice cloning"],
+              ["research", "Academic, market research, competitive analysis"],
+              ["domain-specialist", "Industry-specific expertise (pharma, real estate, etc.)"],
+              ["personal", "Life coaching, accountability, journaling, personal growth"],
+              ["operations", "Project management, workflows, automation"],
+              ["education", "Tutoring, language learning, curriculum design, study coaching"],
+              ["finance", "Trading, investing, accounting, budgeting, financial analysis"],
+              ["health", "Fitness coaching, nutrition, therapy, wellness, biohacking"],
+              ["legal", "Contract review, compliance, regulatory analysis"],
+              ["sales", "CRM, pipeline, outreach, proposals, deal closing"],
+              ["support", "Customer service, documentation, ticket triage"],
             ].map(([slug, desc]) => (
               <div
                 key={slug}
@@ -443,7 +587,7 @@ GOALS: Top goal status + suggested action.`}
               <p>
                 Read the persona.sh format spec at{" "}
                 <span className="text-[var(--accent)]">
-                  https://site-self-rho.vercel.app/docs
+                  persona.sh/docs
                 </span>{" "}
                 and package my current AI setup as a persona repo. Follow these
                 steps:
@@ -535,6 +679,77 @@ GOALS: Top goal status + suggested action.`}
           </div>
         </section>
 
+        {/* Validation Checklist */}
+        <section id="validation" className="mb-12">
+          <h2 className="text-xl font-semibold mb-4">Validation checklist</h2>
+          <p className="text-[var(--text-secondary)] mb-2">
+            AI agents: run through this list before presenting the package to the user.
+          </p>
+          <p className="text-sm text-[var(--text-muted)] mb-4">
+            Every item must pass. If something fails, fix it before proceeding.
+          </p>
+          <div className="space-y-4">
+            <div className="border border-[var(--border)] rounded-lg p-4">
+              <h3 className="text-sm font-semibold mb-2 text-[var(--text-primary)]">Structure</h3>
+              <div className="space-y-1.5 text-sm text-[var(--text-secondary)]">
+                {[
+                  "persona.yaml exists with all required fields (name, display_name, version, description, author, category, tags)",
+                  "PERSONA.md has ## Identity, ## Communication Style, ## Behavioral Rules sections",
+                  "SETUP.md exists with both AI-assisted and manual install paths",
+                  "README.md exists with What This Is, What It Does, Install, Compatible With sections",
+                  "category is one of the valid slugs listed in Categories above",
+                  "tags is an array of 2-8 lowercase hyphenated strings",
+                  "version follows semver (e.g., 1.0.0)",
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <span className="text-[var(--accent)] shrink-0">[]</span>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="border border-[var(--border)] rounded-lg p-4">
+              <h3 className="text-sm font-semibold mb-2 text-[var(--text-primary)]">De-identification</h3>
+              <div className="space-y-1.5 text-sm text-[var(--text-secondary)]">
+                {[
+                  "No real names, emails, phone numbers, or addresses in any file",
+                  "No API keys, tokens, credentials, or secrets",
+                  "No absolute file paths (e.g., /Users/john/...)",
+                  "No hardcoded Google Drive folder IDs, spreadsheet IDs, or webhook URLs",
+                  "No Telegram user IDs, bot tokens, or chat IDs",
+                  "No company-specific logic that reveals the author's organization",
+                  "All personal data replaced with {{VARIABLE}} placeholders",
+                  "Workflow/automation files use YOUR_SHEET_ID, YOUR_FOLDER_ID, YOUR_BOT_TOKEN style placeholders",
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <span className="text-[var(--accent)] shrink-0">[]</span>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="border border-[var(--border)] rounded-lg p-4">
+              <h3 className="text-sm font-semibold mb-2 text-[var(--text-primary)]">Quality</h3>
+              <div className="space-y-1.5 text-sm text-[var(--text-secondary)]">
+                {[
+                  "PERSONA.md Identity section is specific, not generic ('legal analyst specializing in UAE free zones' not 'helpful legal expert')",
+                  "Communication Style has at least 3 concrete rules, not vibes",
+                  "Behavioral Rules has at least 2 NEVER or ALWAYS constraints",
+                  "highlights array has 3-9 entries describing what makes this persona distinct",
+                  "description is 1-3 sentences that would make someone want to install it",
+                  "If blueprints exist: each has blueprint.yaml, README.md, and setup.md with numbered steps",
+                  "If workflows exist: each has command (starting with /), name, and description",
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <span className="text-[var(--accent)] shrink-0">[]</span>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Submit */}
         <section id="submit" className="mb-12">
           <h2 className="text-xl font-semibold mb-4">How to submit</h2>
@@ -579,15 +794,19 @@ GOALS: Top goal status + suggested action.`}
         </section>
 
         {/* Full example */}
-        <section className="mb-12 border-t border-[var(--border)] pt-10">
+        <section id="complete-example" className="mb-12 border-t border-[var(--border)] pt-10">
           <h2 className="text-xl font-semibold mb-4">Complete example</h2>
           <p className="text-[var(--text-secondary)] mb-4">
-            A minimal but complete persona repo:
+            All 4 required files for a minimal persona package, plus a blueprint.
+            Copy this structure as a starting point.
           </p>
-          <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-5 font-mono text-sm leading-relaxed">
+
+          <h3 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3 mt-6">
+            persona.yaml
+          </h3>
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-5 font-mono text-sm leading-relaxed mb-6">
             <pre className="text-[var(--text-secondary)] whitespace-pre-wrap">
-              {`# persona.yaml
-name: sales-closer
+              {`name: sales-closer
 display_name: Sales Closer
 version: 1.0.0
 description: >
@@ -599,6 +818,9 @@ author:
   github: janesmith
 category: sales
 tags: [sales, b2b, pipeline, deal-closing, crm]
+compatible_with:
+  - Claude Code
+  - Cursor
 requires_mcp:
   - name: gmail
     required: true
@@ -613,20 +835,34 @@ variables:
   - key: YOUR_COMPANY
     prompt: "Company name?"
     required: true
+workflows:
+  - command: /pipeline
+    name: Pipeline Review
+    description: "Scans all deals, flags stale ones, suggests next actions"
 blueprints:
   - deal-tracker
+highlights:
+  - "Flags any deal with no activity in 14+ days. No deals go cold silently."
+  - "Drafts follow-up emails in your voice, not a template. Ready to send."
+  - "Scores every deal by close probability based on activity and timeline."
+  - "Pipeline spreadsheet auto-created with status tracking and reminders."
+repository: https://github.com/janesmith/sales-closer`}
+            </pre>
+          </div>
 
----
-
-# PERSONA.md
-
-## Identity
+          <h3 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
+            PERSONA.md
+          </h3>
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-5 font-mono text-sm leading-relaxed mb-6">
+            <pre className="text-[var(--text-secondary)] whitespace-pre-wrap">
+              {`## Identity
 
 You are the Sales Closer for {{YOUR_NAME}} at
 {{YOUR_COMPANY}}. Your job is to move deals through
 the pipeline and close them. You track every prospect,
 draft follow-up emails in the user's voice, and flag
-deals that are going cold.
+deals that are going cold. You are a partner in the
+sales process, not a reporting tool.
 
 ## Communication Style
 
@@ -634,17 +870,134 @@ deals that are going cold.
 - No fluff. "Deal X is 60% likely to close by March"
   not "Deal X is looking promising."
 - Match the user's tone in prospect communications.
+- When presenting pipeline: table format, sorted by
+  close probability descending.
 
 ## Behavioral Rules
 
 - NEVER send an email to a prospect without approval.
 - NEVER share pipeline data outside the conversation.
 - Flag any deal with no activity in 14+ days.
+- When a deal is at risk, say so directly. Don't hedge.
 
----
+## Context
 
-# blueprints/deal-tracker/blueprint.yaml
-name: deal-tracker
+- Company: {{YOUR_COMPANY}}
+- Industry: {{YOUR_INDUSTRY}}
+- Average deal cycle: {{YOUR_DEAL_CYCLE}} days
+
+## Integrations
+
+- Gmail: prospect email drafting and tracking
+- Google Sheets: pipeline spreadsheet
+- If Gmail is not connected, draft emails as text blocks
+  and note they need manual sending.`}
+            </pre>
+          </div>
+
+          <h3 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
+            SETUP.md
+          </h3>
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-5 font-mono text-sm leading-relaxed mb-6">
+            <pre className="text-[var(--text-secondary)] whitespace-pre-wrap">
+              {`# Setup
+
+## Quick Install
+
+Paste into your AI agent:
+
+\`\`\`
+Install the Sales Closer persona from
+github.com/janesmith/sales-closer -- clone the repo,
+read the setup instructions, ask me for my personal
+details, replace all template variables, copy the
+files to the right config locations, and walk me
+through connecting any integrations it needs.
+\`\`\`
+
+## Manual Installation
+
+### 1. Clone the repo
+\`\`\`bash
+git clone https://github.com/janesmith/sales-closer.git
+cd sales-closer
+\`\`\`
+
+### 2. Edit PERSONA.md
+Replace these placeholders with your info:
+| Variable | Replace with |
+|---|---|
+| {{YOUR_NAME}} | Your full name |
+| {{YOUR_COMPANY}} | Your company name |
+| {{YOUR_INDUSTRY}} | Your industry |
+| {{YOUR_DEAL_CYCLE}} | Average deal length in days |
+
+### 3. Copy to your AI config
+- Claude Code: copy PERSONA.md content into ~/.claude/CLAUDE.md
+- Cursor: copy into .cursorrules in your project root
+
+### 4. Connect Gmail (optional)
+Set up the Gmail MCP server for email drafting.
+Without it, the persona still works but drafts
+emails as text blocks instead of sending directly.
+
+### 5. Test it works
+Try: "Review my pipeline and flag anything stale."
+You should get a structured table of deals with
+status and recommended next actions.`}
+            </pre>
+          </div>
+
+          <h3 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
+            README.md
+          </h3>
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-5 font-mono text-sm leading-relaxed mb-6">
+            <pre className="text-[var(--text-secondary)] whitespace-pre-wrap">
+              {`# Sales Closer
+
+AI persona for B2B pipeline management and deal
+execution. Tracks every prospect, drafts follow-ups
+in your voice, flags stale deals, and scores close
+probability.
+
+## What It Does
+
+- Flags deals with no activity in 14+ days
+- Drafts follow-up emails ready to send
+- Scores deals by close probability
+- Creates pipeline spreadsheet with tracking
+- Reviews pipeline on command with /pipeline
+
+## Install
+
+Paste into Claude Code, Cursor, or any AI agent:
+
+\`\`\`
+Install the Sales Closer persona from
+github.com/janesmith/sales-closer
+\`\`\`
+
+## Blueprints
+
+| Name | Complexity | What it builds |
+|---|---|---|
+| Deal Tracker | Simple | Pipeline spreadsheet with reminders |
+
+## Compatible With
+
+- Claude Code
+- Cursor
+
+For manual setup, see [SETUP.md](SETUP.md).`}
+            </pre>
+          </div>
+
+          <h3 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
+            blueprints/deal-tracker/blueprint.yaml
+          </h3>
+          <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-5 font-mono text-sm leading-relaxed">
+            <pre className="text-[var(--text-secondary)] whitespace-pre-wrap">
+              {`name: deal-tracker
 display_name: Deal Tracking Pipeline
 version: 1.0.0
 description: >

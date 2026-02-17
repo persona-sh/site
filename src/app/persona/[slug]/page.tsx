@@ -69,7 +69,7 @@ export default async function PersonaPage({
             How to install
           </h2>
           <p className="text-sm text-[var(--text-secondary)] mb-3">
-            Open your AI agent (Claude Code, Cursor, Windsurf, etc.) and paste this:
+            Open any AI agent and paste this:
           </p>
           <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg px-6 py-4 text-sm">
             <span className="text-[var(--text-primary)]">

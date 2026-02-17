@@ -27,7 +27,7 @@ export default function Home() {
             </span>
           </div>
           <p className="text-xs text-[var(--text-muted)] mt-3">
-            Paste that into Claude Code, Cursor, Windsurf, or any AI agent. It handles the rest.
+            Paste that into any AI agent. Claude Code, Cursor, Windsurf, OpenClaw, ZeroClaw, or anything else that reads config files.
           </p>
         </div>
       </section>
@@ -171,8 +171,8 @@ export default function Home() {
               <h3 className="font-semibold mb-2">Not locked in</h3>
               <p className="text-sm text-[var(--text-secondary)]">
                 Persona packages are markdown files in a Git repo. They work
-                with Claude Code, Cursor, Windsurf, Codex CLI, Copilot, Gemini,
-                and any agent that reads config files. You own them.
+                with Claude Code, Cursor, Windsurf, OpenClaw, ZeroClaw, Codex CLI,
+                Copilot, and any agent that reads config files. You own them.
               </p>
             </div>
             <div className="border border-[var(--border)] rounded-lg p-5">

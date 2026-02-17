@@ -44,7 +44,7 @@ export default function SubmitPage() {
             <p className="text-[var(--text-primary)] leading-relaxed">
               Read the persona.sh format spec at{" "}
               <span className="text-[var(--accent)]">
-                https://site-self-rho.vercel.app/docs
+                persona.sh/docs
               </span>{" "}
               and package my current AI setup as a persona repo. Scan my config
               files, analyze my identity and behavioral rules, check for any
