@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { personas } from "@/data/registry";
-import { getStarsMap } from "@/lib/github";
+import { getStarsMap, fetchRepoFile } from "@/lib/github";
 import CopyInstallPrompt from "@/components/CopyInstallPrompt";
+import ReactMarkdown from "react-markdown";
 
 // Generate static paths for all personas
 export function generateStaticParams() {
@@ -37,7 +38,10 @@ export default async function PersonaPage({
     notFound();
   }
 
-  const starsMap = await getStarsMap();
+  const [starsMap, readme] = await Promise.all([
+    getStarsMap(),
+    fetchRepoFile(persona.repository, "README.md"),
+  ]);
   const stars = starsMap[persona.slug];
 
   return (
@@ -108,6 +112,18 @@ export default async function PersonaPage({
             </a>
           )}
         </div>
+
+        {/* README from repo */}
+        {readme && (
+          <div className="mb-10 border border-[var(--border)] rounded-lg p-6">
+            <h2 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-4">
+              From the repo
+            </h2>
+            <div className="prose prose-invert prose-sm max-w-none prose-headings:text-[var(--text-primary)] prose-p:text-[var(--text-secondary)] prose-a:text-[var(--accent)] prose-strong:text-[var(--text-primary)] prose-code:text-[var(--accent)] prose-li:text-[var(--text-secondary)] prose-h1:text-xl prose-h1:mb-3 prose-h2:text-base prose-h2:mb-2 prose-h3:text-sm prose-hr:border-[var(--border)]">
+              <ReactMarkdown>{readme}</ReactMarkdown>
+            </div>
+          </div>
+        )}
 
         <div className="grid md:grid-cols-3 gap-10">
           {/* Main content */}

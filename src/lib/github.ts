@@ -24,6 +24,28 @@ async function fetchStars(url: string): Promise<number | null> {
   }
 }
 
+export async function fetchRepoFile(
+  repoUrl: string,
+  filename: string
+): Promise<string | null> {
+  const repo = parseGitHubRepo(repoUrl);
+  if (!repo) return null;
+
+  // Try main branch first, then master
+  for (const branch of ["main", "master"]) {
+    try {
+      const res = await fetch(
+        `https://raw.githubusercontent.com/${repo.owner}/${repo.repo}/${branch}/${filename}`,
+        { next: { revalidate: 3600 } }
+      );
+      if (res.ok) return await res.text();
+    } catch {
+      continue;
+    }
+  }
+  return null;
+}
+
 export async function getStarsMap(): Promise<Record<string, number>> {
   const entries = await Promise.all(
     personas.map(async (p) => {
