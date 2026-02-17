@@ -669,6 +669,17 @@ GOALS: Top goal status + suggested action.`}
                 7. Show me the file structure and key files for review before
                 writing to disk.
               </p>
+              <p>
+                8. After I approve, audit the final output. Read every
+                generated file and verify: does the Identity section actually
+                capture how I use my AI, or is it generic filler? Do the
+                Behavioral Rules reflect my real constraints, or did you
+                invent ones I never set? Are the Communication Style rules
+                specific patterns from my config, not vague best practices
+                you added? Does every blueprint match a real system I built,
+                not something you assumed? Flag anything you&apos;re unsure
+                about and ask me rather than guessing.
+              </p>
             </div>
           </div>
 

@@ -297,7 +297,8 @@ Paste this prompt into your AI agent:
 4. Check for project systems I've built (automations, bots, tracking spreadsheets, workflows). Package each as a blueprint with setup.md, workflow files, and templates.
 5. De-identify everything. Replace all personal data with {{VARIABLE}} placeholders. Strip API keys, credentials, tokens, and absolute paths. Also scrub workflow files: replace hardcoded user IDs, bot tokens, Drive folder IDs, spreadsheet IDs, webhook URLs, company names, team member names with descriptive placeholders.
 6. Generate the full package: persona.yaml, PERSONA.md, SETUP.md, README.md, commands/, skills/, blueprints/ if applicable.
-7. Show me the file structure and key files for review before writing to disk."
+7. Show me the file structure and key files for review before writing to disk.
+8. After I approve, audit the final output. Read every generated file and verify: does the Identity section actually capture how I use my AI, or is it generic filler? Do the Behavioral Rules reflect my real constraints, or did you invent ones I never set? Are the Communication Style rules specific patterns from my config, not vague best practices you added? Does every blueprint match a real system I built, not something you assumed? Flag anything you're unsure about and ask me rather than guessing."
 
 =====================================
 SECTION 13: HOW TO INSTALL A PERSONA
