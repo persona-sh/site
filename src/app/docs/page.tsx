@@ -60,25 +60,19 @@ export default function DocsPage() {
           </p>
           <div className="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-5 text-sm space-y-3">
             <div>
-              <span className="text-[var(--text-muted)]">Tool:</span>{" "}
-              <span className="text-[var(--text-secondary)]">
-                &ldquo;Search the web for X&rdquo; -- single capability,
-                stateless
-              </span>
-            </div>
-            <div>
               <span className="text-[var(--text-muted)]">Skill:</span>{" "}
               <span className="text-[var(--text-secondary)]">
-                &ldquo;When asked about spreadsheets, follow these rules&rdquo;
-                -- domain knowledge, conditional
+                &ldquo;Follow these code review rules&rdquo; -- teaches your AI
+                patterns in a domain. You still build everything yourself.
               </span>
             </div>
             <div>
               <span className="text-[var(--accent)]">Persona:</span>{" "}
               <span className="text-[var(--text-primary)]">
-                &ldquo;You are a strategic operator who pushes back on bad ideas
-                and acts instead of reporting&rdquo; -- full identity,
-                always-on, stateful
+                &ldquo;You are a strategic operator. Here are my behavioral rules,
+                communication style, and three project systems you can build for the
+                user from scratch.&rdquo; -- full identity with blueprints the AI
+                builds and operates for you.
               </span>
             </div>
           </div>

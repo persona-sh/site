@@ -38,30 +38,22 @@ export default async function Home() {
       <section className="px-6 py-16 border-t border-[var(--border)]">
         <div className="max-w-4xl mx-auto">
           <h2 className="text-2xl font-semibold mb-8 text-center">
-            A skill tells AI what to do. A persona tells AI who to{" "}
-            <span className="text-[var(--accent)]">be</span>.
+            Skills teach patterns. Personas ship{" "}
+            <span className="text-[var(--accent)]">systems</span>.
           </h2>
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="border border-[var(--border)] rounded-lg p-5">
-              <div className="text-[var(--text-muted)] text-xs uppercase tracking-wider mb-2">
-                Tool
-              </div>
-              <p className="text-sm text-[var(--text-secondary)]">
-                &ldquo;Search the web for X&rdquo;
-              </p>
-              <p className="text-xs text-[var(--text-muted)] mt-2">
-                Single capability. Stateless. One action.
-              </p>
-            </div>
+          <div className="grid md:grid-cols-2 gap-6">
             <div className="border border-[var(--border)] rounded-lg p-5">
               <div className="text-[var(--text-muted)] text-xs uppercase tracking-wider mb-2">
                 Skill
               </div>
               <p className="text-sm text-[var(--text-secondary)]">
-                &ldquo;When asked about spreadsheets, follow these rules&rdquo;
+                &ldquo;Follow these code review rules&rdquo;
               </p>
-              <p className="text-xs text-[var(--text-muted)] mt-2">
-                Domain knowledge. Conditional. Task-scoped.
+              <p className="text-xs text-[var(--text-muted)] mt-3">
+                You get: better AI output in a specific domain.
+              </p>
+              <p className="text-xs text-[var(--text-muted)] mt-1">
+                You still need: technical knowledge to build anything with it.
               </p>
             </div>
             <div className="border border-[var(--accent)] border-opacity-40 rounded-lg p-5 bg-[var(--accent-dim)]">
@@ -69,11 +61,13 @@ export default async function Home() {
                 Persona
               </div>
               <p className="text-sm text-[var(--text-primary)]">
-                &ldquo;You are a strategic operating partner who thinks in systems,
-                pushes back on bad ideas, and acts instead of reporting&rdquo;
+                &ldquo;You are a strategic operating partner. Here are my
+                communication rules, behavioral constraints, and three
+                project systems you can build for the user from scratch.&rdquo;
               </p>
-              <p className="text-xs text-[var(--text-secondary)] mt-2">
-                Full identity. Always-on. Stateful. Shapes every interaction.
+              <p className="text-xs text-[var(--text-secondary)] mt-3">
+                You get: a fully configured AI identity with project blueprints
+                it builds and operates for you. Out of the box.
               </p>
             </div>
           </div>
