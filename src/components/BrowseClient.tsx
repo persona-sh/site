@@ -20,6 +20,8 @@ export default function BrowseClient({
 }) {
   const [activeCategory, setActiveCategory] = useState("all");
   const [search, setSearch] = useState("");
+  const [hasWorkflows, setHasWorkflows] = useState(false);
+  const [hasBlueprints, setHasBlueprints] = useState(false);
 
   // Count personas per category for the filter pills
   const categoryCounts = categories.reduce<Record<string, number>>((acc, cat) => {
@@ -49,7 +51,9 @@ export default function BrowseClient({
       p.compatibleWith.some((c) => c.toLowerCase().includes(q)) ||
       p.blueprints.some((b) => b.displayName.toLowerCase().includes(q) || b.description.toLowerCase().includes(q) || b.services.some((s) => s.toLowerCase().includes(q))) ||
       p.author.toLowerCase().includes(q);
-    return matchesCategory && matchesSearch;
+    const matchesWorkflows = !hasWorkflows || p.workflows.length > 0;
+    const matchesBlueprints = !hasBlueprints || p.blueprints.length > 0;
+    return matchesCategory && matchesSearch && matchesWorkflows && matchesBlueprints;
   });
 
   return (
@@ -69,6 +73,32 @@ export default function BrowseClient({
             onChange={(e) => setSearch(e.target.value)}
             className="w-full max-w-md bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg px-4 py-2.5 text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent)] transition-colors"
           />
+        </div>
+
+        {/* Feature filters */}
+        <div className="flex gap-5 mb-5">
+          <label className="flex items-center gap-2 text-sm cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={hasWorkflows}
+              onChange={(e) => setHasWorkflows(e.target.checked)}
+              className="accent-[var(--accent)]"
+            />
+            <span className={hasWorkflows ? "text-[var(--text-primary)]" : "text-[var(--text-muted)]"}>
+              Has workflows
+            </span>
+          </label>
+          <label className="flex items-center gap-2 text-sm cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={hasBlueprints}
+              onChange={(e) => setHasBlueprints(e.target.checked)}
+              className="accent-[var(--accent)]"
+            />
+            <span className={hasBlueprints ? "text-[var(--text-primary)]" : "text-[var(--text-muted)]"}>
+              Has blueprints
+            </span>
+          </label>
         </div>
 
         {/* Category filters */}
