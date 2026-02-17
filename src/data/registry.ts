@@ -25,7 +25,7 @@ export interface PersonaEntry {
   authorGithub: string;
   category: string;
   tags: string[];
-  mcpServers: { name: string; required: boolean }[];
+  integrations: { name: string; type?: string; required: boolean }[];
   compatibleWith: string[];
   workflows: Workflow[];
   blueprints: Blueprint[];
@@ -46,9 +46,9 @@ export const personas: PersonaEntry[] = [
     authorGithub: "adbcjay",
     category: "executive",
     tags: ["operator", "coo", "non-developer", "anti-sycophancy", "business-automation", "strategic"],
-    mcpServers: [
-      { name: "google-drive", required: false },
-      { name: "n8n", required: false },
+    integrations: [
+      { name: "google-drive", type: "mcp", required: false },
+      { name: "n8n", type: "service", required: false },
     ],
     compatibleWith: ["Claude Code", "Cursor", "Windsurf", "Codex CLI", "Copilot"],
     workflows: [],
@@ -116,13 +116,13 @@ export const personas: PersonaEntry[] = [
     authorGithub: "mimurchison",
     category: "executive",
     tags: ["executive", "email", "calendar", "briefings", "productivity", "crm"],
-    mcpServers: [
-      { name: "gmail", required: true },
-      { name: "google-calendar", required: true },
-      { name: "slack", required: false },
-      { name: "whatsapp", required: false },
-      { name: "imessage", required: false },
-      { name: "granola", required: false },
+    integrations: [
+      { name: "gmail", type: "mcp", required: true },
+      { name: "google-calendar", type: "mcp", required: true },
+      { name: "slack", type: "mcp", required: false },
+      { name: "whatsapp", type: "mcp", required: false },
+      { name: "imessage", type: "mcp", required: false },
+      { name: "granola", type: "mcp", required: false },
     ],
     compatibleWith: ["Claude Code"],
     workflows: [
@@ -171,7 +171,7 @@ export const personas: PersonaEntry[] = [
     authorGithub: "danielmiessler",
     category: "executive",
     tags: ["identity-framework", "life-os", "executive", "coaching", "memory", "telos"],
-    mcpServers: [],
+    integrations: [],
     compatibleWith: ["Claude Code"],
     workflows: [],
     blueprints: [],
@@ -197,7 +197,7 @@ export const personas: PersonaEntry[] = [
     authorGithub: "minimaxir",
     category: "developer",
     tags: ["rust", "opinionated", "enforcer", "strict", "language-specific", "coding-standards"],
-    mcpServers: [],
+    integrations: [],
     compatibleWith: ["Claude Code", "Cursor"],
     workflows: [],
     blueprints: [],
@@ -223,7 +223,7 @@ export const personas: PersonaEntry[] = [
     authorGithub: "aaronjmars",
     category: "creative",
     tags: ["personal-brand", "voice-clone", "identity", "writing", "self-construction", "worldview"],
-    mcpServers: [],
+    integrations: [],
     compatibleWith: ["Claude Code", "Cursor", "Windsurf"],
     workflows: [],
     blueprints: [],
@@ -249,7 +249,7 @@ export const personas: PersonaEntry[] = [
     authorGithub: "davidhariri",
     category: "personal",
     tags: ["life-os", "journaling", "goals", "accountability", "routines", "personal-growth", "planning"],
-    mcpServers: [],
+    integrations: [],
     compatibleWith: ["Claude Code"],
     workflows: [],
     blueprints: [],
@@ -275,7 +275,7 @@ export const personas: PersonaEntry[] = [
     authorGithub: "lout33",
     category: "personal",
     tags: ["life-coach", "symbiotic", "accountability", "pattern-recognition", "memory", "personal-growth", "challenging"],
-    mcpServers: [],
+    integrations: [],
     compatibleWith: ["Claude Code", "OpenClaw"],
     workflows: [],
     blueprints: [],

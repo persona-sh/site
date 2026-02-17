@@ -328,10 +328,15 @@ compatible_with:            # agents you've tested with
   - OpenClaw                # any agent that reads
   - ZeroClaw                # markdown config files works
 
-requires_mcp:               # optional
+integrations:               # optional
   - name: gmail
+    type: mcp               # mcp, api, service, plugin
     required: true
     purpose: "Email triage"
+  - name: notion
+    type: api
+    required: false
+    purpose: "Knowledge base"
 
 variables:                  # optional
   - key: YOUR_NAME
@@ -361,7 +366,7 @@ repository: https://github.com/you/my-persona`}
           <div className="mt-4 space-y-2 text-sm text-[var(--text-secondary)]">
             <p><strong className="text-[var(--text-primary)]">Required fields:</strong> name, display_name, version, description, author (name + github), category, tags</p>
             <p><strong className="text-[var(--text-primary)]">Recommended:</strong> compatible_with, highlights, repository, variables</p>
-            <p><strong className="text-[var(--text-primary)]">Optional:</strong> requires_mcp, workflows, blueprints</p>
+            <p><strong className="text-[var(--text-primary)]">Optional:</strong> integrations, workflows, blueprints</p>
             <p className="text-[var(--text-muted)] mt-2 text-xs">
               <strong>Note on compatible_with:</strong> Persona packages are plain markdown files. They work with ANY AI agent that reads config files. The compatible_with field lists agents the author has tested with, not agents it&apos;s limited to. If an agent isn&apos;t listed, the persona still works -- the author just hasn&apos;t verified it.
             </p>
@@ -833,11 +838,13 @@ tags: [sales, b2b, pipeline, deal-closing, crm]
 compatible_with:
   - Claude Code
   - Cursor
-requires_mcp:
+integrations:
   - name: gmail
+    type: mcp
     required: true
     purpose: "Prospect communication"
   - name: google-sheets
+    type: mcp
     required: false
     purpose: "Pipeline tracking"
 variables:

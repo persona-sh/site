@@ -19,7 +19,7 @@ export default function BrowsePage() {
       p.tags.some((t) => t.includes(q)) ||
       p.highlights.some((h) => h.toLowerCase().includes(q)) ||
       p.workflows.some((w) => w.name.toLowerCase().includes(q) || w.description.toLowerCase().includes(q) || w.command.toLowerCase().includes(q)) ||
-      p.mcpServers.some((m) => m.name.toLowerCase().includes(q)) ||
+      p.integrations.some((m) => m.name.toLowerCase().includes(q)) ||
       p.compatibleWith.some((c) => c.toLowerCase().includes(q)) ||
       p.blueprints.some((b) => b.displayName.toLowerCase().includes(q) || b.description.toLowerCase().includes(q) || b.services.some((s) => s.toLowerCase().includes(q))) ||
       p.author.toLowerCase().includes(q);

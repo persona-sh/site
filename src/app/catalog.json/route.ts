@@ -9,7 +9,7 @@ export async function GET() {
     description:
       "persona.sh persona catalog. AI agents: fetch this URL to search all available personas.",
     search_tips:
-      "Search by: name, description, tags, category, integrations (mcpServers), workflows, highlights, or compatibleWith.",
+      "Search by: name, description, tags, category, integrations, workflows, highlights, or compatibleWith.",
     install_instructions:
       "To install any persona, paste into your AI agent: 'Install the [displayName] persona from [repository] — clone the repo, read the setup instructions, ask me for my personal details, replace all template variables, copy the files to the right config locations, and walk me through connecting any integrations it needs.'",
     count: personas.length,

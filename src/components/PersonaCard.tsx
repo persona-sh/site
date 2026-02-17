@@ -22,7 +22,7 @@ export default function PersonaCard({ persona }: { persona: PersonaEntry }) {
   const stats = [
     persona.workflows.length > 0 && `${persona.workflows.length} workflow${persona.workflows.length > 1 ? "s" : ""}`,
     persona.blueprints.length > 0 && `${persona.blueprints.length} blueprint${persona.blueprints.length > 1 ? "s" : ""}`,
-    persona.mcpServers.length > 0 && `${persona.mcpServers.length} integration${persona.mcpServers.length > 1 ? "s" : ""}`,
+    persona.integrations.length > 0 && `${persona.integrations.length} integration${persona.integrations.length > 1 ? "s" : ""}`,
   ].filter(Boolean);
 
   return (
