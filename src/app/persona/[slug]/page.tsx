@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
 import { personas } from "@/data/registry";
-import { getStarsMap, fetchRepoFile } from "@/lib/github";
+import { getStarsMap } from "@/lib/github";
 import CopyInstallPrompt from "@/components/CopyInstallPrompt";
-import ReactMarkdown from "react-markdown";
 
 // Generate static paths for all personas
 export function generateStaticParams() {
@@ -38,10 +37,7 @@ export default async function PersonaPage({
     notFound();
   }
 
-  const [starsMap, readme] = await Promise.all([
-    getStarsMap(),
-    fetchRepoFile(persona.repository, "README.md"),
-  ]);
+  const starsMap = await getStarsMap();
   const stars = starsMap[persona.slug];
 
   return (
@@ -112,45 +108,6 @@ export default async function PersonaPage({
             </a>
           )}
         </div>
-
-        {/* README intro from repo */}
-        {readme && (() => {
-          // Extract intro: title + first ## section only
-          const lines = readme.split("\n");
-          let sectionCount = 0;
-          let cutoff = lines.length;
-          for (let i = 0; i < lines.length; i++) {
-            if (lines[i].match(/^##\s/)) {
-              sectionCount++;
-              if (sectionCount === 2) {
-                cutoff = i;
-                break;
-              }
-            }
-          }
-          const intro = lines.slice(0, cutoff).join("\n").trim();
-          if (!intro) return null;
-          return (
-            <div className="mb-10 border border-[var(--border)] rounded-lg p-6">
-              <h2 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-4">
-                From the repo
-              </h2>
-              <div className="prose prose-invert prose-sm max-w-none prose-headings:text-[var(--text-primary)] prose-p:text-[var(--text-secondary)] prose-a:text-[var(--accent)] prose-strong:text-[var(--text-primary)] prose-code:text-[var(--accent)] prose-li:text-[var(--text-secondary)] prose-h1:text-xl prose-h1:mb-3 prose-h2:text-base prose-h2:mb-2 prose-h3:text-sm prose-hr:border-[var(--border)]">
-                <ReactMarkdown>{intro}</ReactMarkdown>
-              </div>
-              {cutoff < lines.length && persona.repository !== "#" && (
-                <a
-                  href={persona.repository}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block mt-4 text-sm text-[var(--accent)] hover:underline"
-                >
-                  Read full README on GitHub &rarr;
-                </a>
-              )}
-            </div>
-          );
-        })()}
 
         <div className="grid md:grid-cols-3 gap-10">
           {/* Main content */}
