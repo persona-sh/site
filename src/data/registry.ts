@@ -814,6 +814,37 @@ export const personas: PersonaEntry[] = [
     repository: "https://github.com/amanaiproduct/personal-os",
     installCommand: "git clone https://github.com/amanaiproduct/personal-os.git",
   },
+  {
+    slug: "academic-workflow",
+    displayName: "Academic Research Workflow",
+    description:
+      "Ready-to-fork Claude Code template for academics using LaTeX/Beamer and R. 10 specialized agents, 21 skills, adversarial QA loops, quality gates, and replication protocols. Describe what you need in plain language and the system plans, implements, reviews, and verifies autonomously.",
+    author: "Pedro H. C. Sant'Anna",
+    authorGithub: "pedrohcgs",
+    category: "research",
+    tags: ["academic", "latex", "beamer", "quarto", "r-lang", "adversarial-qa", "multi-agent", "replication"],
+    integrations: [
+      { name: "XeLaTeX", type: "service", required: true },
+      { name: "R", type: "service", required: true },
+      { name: "Quarto", type: "service", required: false },
+    ],
+    compatibleWith: ["Claude Code"],
+    workflows: [
+      { command: "/review", name: "Adversarial Review", description: "Critic and fixer agents loop until quality score meets 80/90/95 thresholds" },
+      { command: "/explore", name: "Fast Exploration", description: "60/100 fast-track prototyping for research ideas before committing to full implementation" },
+    ],
+    blueprints: [],
+    highlights: [
+      "10 domain-specific agents including critic, fixer, slide builder, and replication verifier. Each agent has a defined role and hands off to the next.",
+      "Quality gates at 80/90/95 thresholds. Work doesn't ship until the adversarial review loop passes your quality bar.",
+      "Beamer-to-Quarto translation pipeline. Describe your lecture in plain language, get publication-ready slides.",
+      "Replication protocols built in. Research outputs include verification steps so results can be independently reproduced.",
+      "307 stars. Built by an Emory University econometrics professor for real academic workflows. MIT license.",
+    ],
+    version: "1.0.0",
+    repository: "https://github.com/pedrohcgs/claude-code-my-workflow",
+    installCommand: "git clone https://github.com/pedrohcgs/claude-code-my-workflow.git",
+  },
 ];
 
 export const categories = [
